@@ -1,0 +1,36 @@
+Embora no mesmo diretório, cada um destes subdiretórios (client, control_client, server, middleware) têm como objetivo
+ser um projeto diferente. O client destina-se a correr no cliente; o control_client server para controlar o servidor;
+o server a correr no servidor; e o middleware é partilhado pelos três projetos. Se o servidor e os clientes estiverem em
+máquinas distintas, este diretório middleware terá de estar em todas as máquinas.
+
+Para correr o servidor e os clientes dentro do PyCharm tem de se configurar as preferências do projeto
+para incluir o client, o control_client, o server e o middleware como 4 diretórios onde se localiza código fonte.
+Caso contrário haverá erro na importação dos pacotes. Para tal deve configurar a estrutura do projeto nas
+preferências ou utilizar o menu do contexto em cima de cada diretório (client, control_client, server, middleware) e
+escolher Mark as directory > as source root.
+
+1. executar o server/__main__.py
+2. executar a seguir o client/__main__.py
+(tantos clientes quantos se quiser, num máximo de 2 ao mesmo tempo. Há um parâmetro no servidor para definir
+quantos clientes se pretende em simultâneo)
+3. executar o control_client/__main__.py
+
+Para se executar da linha de comandos em ambiente macOS ou Linux, tem de se:
+1. abrir um terminal na pasta server
+2. executar
+    export PYTHONPATH=../middleware; python3 -m server
+3. abrir outro terminal na pasta client
+4. executar
+    export PYTHONPATH=../middleware; python3 -m ui
+
+Em ambiente Windows tem de se:
+1. abrir um terminal na pasta server
+2. executar
+    set PYTHONPATH=..\middleware
+3. executar (ter em atenção o caminho onde tem instalado o python3)
+    python3 -m server
+4. abrir outro terminal na pasta client
+5. executar
+    set PYTHONPATH=..\middleware
+6. executar (ter em atenção o caminho onde tem instalado o python3)
+    python3 -m ui
