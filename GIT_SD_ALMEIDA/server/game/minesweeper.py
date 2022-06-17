@@ -9,7 +9,7 @@ class MineSweeper:
 
     def __init__(self):
         self.players = []
-        self.currgrid = None#[[' ' for i in range(self.gridsize)] for i in range(self.gridsize)]
+        self.currgrid = None
         self.points = 0
         self.grid = []
         self.size = None
@@ -58,13 +58,17 @@ class MineSweeper:
         if cell:
             # print('\n\n')
             rowno, colno = cell
-            currcell = self.currgrid[rowno][colno]
-            flag = result['flag']
 
             if not self.grid:
-                grid, mines = self.setupgrid(cell)
+                self.grid, self.mines = self.setupgrid(cell)
             if not self.starttime:
                 self.starttime = time.time()
+
+            if not self.currgrid:
+                self.gridsize = len(self.grid)
+                self.currgrid = [[' ' for i in range(self.gridsize)] for i in range(self.gridsize)]
+            currcell = self.currgrid[rowno][colno]
+            flag = result['flag']
 
             if flag:
                 # Add a flag if the cell is empty
@@ -76,7 +80,7 @@ class MineSweeper:
                     else:
                         self.points -= 3
                 # Remove the flag if there is one
-                elif currcell == 'F':
+                elif move == 'F':
                     self.currgrid[rowno][colno] = ' '
                     self.flags.remove(cell)
                     self.points += 3
@@ -94,13 +98,13 @@ class MineSweeper:
                 # self.playgame()
                 return True
 
-            elif currcell == ' ':
+            elif move == ' ':
                 self.showcells(self.grid, self.currgrid, rowno, colno)
 
             else:
                 message = "That cell is already shown"
 
-            if set(self.flags) == set(mines):
+            if set(self.flags) == set(self.mines):
                 minutes, seconds = divmod(int(time.time() - self.starttime), 60)
                 print(
                     'You Win {} '

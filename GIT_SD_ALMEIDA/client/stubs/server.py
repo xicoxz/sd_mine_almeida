@@ -24,7 +24,7 @@ class Server:
     def send_setup(self,size,n_mines):
         self.current_connection.send_str(stubs.MAP_SETUP_OP)
         self.current_connection.send_str(size+"-"+n_mines)
-        return self.current_connection.receive_str()
+        return self.current_connection.receive_int(1)
 
     def get_status(self):
         self.current_connection.send_str(stubs.STATUS_OP)
@@ -51,7 +51,7 @@ class Server:
     def addplayer(self, player):
         self.current_connection.send_str(stubs.ADD_PLAYER_OP)
         self.current_connection.send_str(player)
-        return self.current_connection.receive_str()
+        return self.current_connection.receive_int(1)
 
 
 
